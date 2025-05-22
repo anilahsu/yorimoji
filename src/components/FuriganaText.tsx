@@ -1,30 +1,47 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { initializeKuroshiro, toFuriganaHTML } from "@/lib/kuroshiro";
 
 interface FuriganaTextProps {
   text: string;
-  reading: string;
+  reading?: string;
   showFurigana: boolean;
-  readingStyle?: "hiragana" | "katakana";
+  readingStyle: "hiragana" | "katakana" | "romaji";
 }
 
 const FuriganaText: React.FC<FuriganaTextProps> = ({
   text,
-  reading,
   showFurigana,
+  readingStyle,
 }) => {
-  if (!showFurigana) {
+  const [furiganaHtml, setFuriganaHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (showFurigana) {
+      (async () => {
+        await initializeKuroshiro();
+        const html = await toFuriganaHTML(text, readingStyle);
+        if (isMounted) setFuriganaHtml(html);
+      })();
+    } else {
+      setFuriganaHtml(null);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [text, showFurigana, readingStyle]);
+
+  if (!showFurigana || !furiganaHtml) {
     return <span>{text}</span>;
   }
 
   return (
-    <span className="inline-block">
-      <ruby>
-        {text}
-        <rt className="text-sm text-gray-600">{reading}</rt>
-      </ruby>
-    </span>
+    <span
+      className="inline-block"
+      dangerouslySetInnerHTML={{ __html: furiganaHtml }}
+    />
   );
 };
 
