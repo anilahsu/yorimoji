@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy-dict": "node scripts/copy-dict.js",
+    "postinstall": "npm run copy-dict"
   },
   "dependencies": {
     "kuromoji": "^0.1.2",
