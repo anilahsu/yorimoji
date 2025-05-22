@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import TextInput from "@/components/TextInput";
+import AnalysisResult from "@/components/AnalysisResult";
 import {
   initializeKuromoji,
   analyzeText,
@@ -11,6 +12,7 @@ import {
 
 export default function Home() {
   const [tokens, setTokens] = useState<Token[]>([]);
+  const [showFurigana, setShowFurigana] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -53,10 +55,24 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">
           Japanese Text Analyzer
         </h1>
+
+        <div className="mb-4 flex justify-end">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={showFurigana}
+              onChange={(e) => setShowFurigana(e.target.checked)}
+              className="form-checkbox"
+            />
+            <span>Show Furigana</span>
+          </label>
+        </div>
+
         <TextInput onTextChange={handleTextChange} />
-        {tokens.map((token) => (
-          <div key={token.surface_form}>{token.surface_form}</div>
-        ))}
+
+        {tokens.length > 0 && (
+          <AnalysisResult tokens={tokens} showFurigana={showFurigana} />
+        )}
       </div>
     </main>
   );
