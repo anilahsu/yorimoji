@@ -9,6 +9,7 @@ import {
   formatTokens,
   Token,
 } from "@/lib/kuromoji";
+import { initializeKuroshiro } from "@/lib/kuroshiro";
 
 export default function Home() {
   const [tokens, setTokens] = useState<Token[]>([]);
@@ -22,11 +23,11 @@ export default function Home() {
   useEffect(() => {
     const init = async () => {
       try {
-        await initializeKuromoji();
+        await Promise.all([initializeKuromoji(), initializeKuroshiro()]);
         setIsLoading(false);
         setError(null);
       } catch (error) {
-        console.error("Failed to initialize Kuromoji:", error);
+        console.error("Failed to initialize Japanese analyzers:", error);
         setError(
           "Failed to initialize the Japanese analyzer. Please refresh the page."
         );
