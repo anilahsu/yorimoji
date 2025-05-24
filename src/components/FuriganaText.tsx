@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { initializeKuroshiro, toFuriganaHTML } from "@/lib/kuroshiro";
+import { toFuriganaHTML, isKuroshiroReady } from "@/lib/kuroshiro";
 
 interface FuriganaTextProps {
   text: string;
@@ -16,24 +16,45 @@ const FuriganaText: React.FC<FuriganaTextProps> = ({
   readingStyle,
 }) => {
   const [furiganaHtml, setFuriganaHtml] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    if (showFurigana) {
-      (async () => {
-        await initializeKuroshiro();
-        const html = await toFuriganaHTML(text, readingStyle);
-        if (isMounted) setFuriganaHtml(html);
-      })();
-    } else {
-      setFuriganaHtml(null);
-    }
+    const generateFurigana = async () => {
+      if (showFurigana && isKuroshiroReady() && text) {
+        setIsGenerating(true);
+        try {
+          const html = await toFuriganaHTML(text, readingStyle);
+          if (isMounted) {
+            setFuriganaHtml(html);
+          }
+        } catch (error) {
+          console.error("Failed to generate furigana:", error);
+          if (isMounted) {
+            setFuriganaHtml(null);
+          }
+        } finally {
+          if (isMounted) {
+            setIsGenerating(false);
+          }
+        }
+      } else {
+        setFuriganaHtml(null);
+        setIsGenerating(false);
+      }
+    };
+    generateFurigana();
     return () => {
       isMounted = false;
     };
   }, [text, showFurigana, readingStyle]);
 
-  if (!showFurigana || !furiganaHtml) {
+
+  if (isGenerating) {
+    return <span className="opacity-50">{text}</span>;
+  }
+
+  if (!showFurigana || !isKuroshiroReady() || furiganaHtml === null) {
     return <span>{text}</span>;
   }
 
