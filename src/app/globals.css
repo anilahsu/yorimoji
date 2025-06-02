@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f9fa; /* Light mode background */
+  --foreground: #212529; /* Light mode text */
+  --color-accent: #007bff; /* Accent color */
 }
 
 @theme inline {
@@ -10,12 +11,13 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-accent: var(--color-accent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1a1a; /* Dark mode background */
+    --foreground: #e9ecef; /* Dark mode text */
   }
 }
 

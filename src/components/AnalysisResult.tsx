@@ -55,7 +55,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => handleWordClick(token)}
-                className="hover:bg-gray-100 rounded px-2 py-1 transition-colors"
+                className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2 py-1 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
               >
                 {containsKanji(token.surface_form) ? (
                   <FuriganaText
@@ -68,9 +68,11 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({
                   <span>{token.surface_form}</span>
                 )}
               </button>
-              <span className="text-sm text-gray-500">({token.pos})</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                ({token.pos})
+              </span>
               {token.base_form !== token.surface_form && (
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
                   基本形: {token.base_form}
                 </span>
               )}
@@ -81,7 +83,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({
 
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-4">
+          <div className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg p-4 shadow-xl">
             Loading dictionary details...
           </div>
         </div>

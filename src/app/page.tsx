@@ -70,23 +70,23 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen p-8">
+    <main className="min-h-screen p-8 bg-[var(--color-background)] text-[var(--color-foreground)]">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-3xl font-bold text-center mb-8 text-[var(--color-foreground)]">
           Japanese Text Analyzer
         </h1>
 
         <div className="mb-4 flex flex-col sm:flex-row gap-2 justify-end items-center">
-          <label className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2 text-[var(--color-foreground)]">
             <input
               type="checkbox"
               checked={showFurigana}
               onChange={(e) => setShowFurigana(e.target.checked)}
-              className="form-checkbox"
+              className="form-checkbox rounded text-[var(--color-accent)] focus:ring-[var(--color-accent)] dark:bg-gray-700 dark:border-gray-600"
             />
             <span>Show Furigana</span>
           </label>
-          <label className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2 text-[var(--color-foreground)]">
             <span>Furigana Style:</span>
             <select
               value={readingStyle}
@@ -95,7 +95,7 @@ export default function Home() {
                   e.target.value as "hiragana" | "katakana" | "romaji"
                 )
               }
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent"
             >
               <option value="hiragana">Hiragana</option>
               <option value="katakana">Katakana</option>

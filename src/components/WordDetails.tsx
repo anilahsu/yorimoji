@@ -26,7 +26,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-xl">
         <div className="flex justify-between items-start mb-4">
           <div>
             <FuriganaText
@@ -36,14 +36,14 @@ const WordDetails: React.FC<WordDetailsProps> = ({
               readingStyle={readingStyle}
             />
             {jlpt && (
-              <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">
+              <span className="ml-2 px-2 py-1 bg-[var(--color-accent)] bg-opacity-20 text-[var(--color-accent)] dark:text-opacity-90 rounded text-sm font-medium">
                 {jlpt}
               </span>
             )}
           </div>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] p-1"
           >
             ✕
           </button>
@@ -51,19 +51,21 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
         <div className="space-y-4">
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 mb-1">
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">
               Part of Speech
             </h3>
-            <p className="text-gray-700">{partOfSpeech.join(", ")}</p>
+            <p className="text-gray-700 dark:text-gray-300">
+              {partOfSpeech.join(", ")}
+            </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 mb-1">
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">
               Meanings
             </h3>
             <ul className="list-disc list-inside space-y-1">
               {meanings.map((meaning, index) => (
-                <li key={index} className="text-gray-700">
+                <li key={index} className="text-gray-700 dark:text-gray-300">
                   {meaning}
                 </li>
               ))}
